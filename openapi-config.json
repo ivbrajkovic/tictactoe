@@ -5,5 +5,5 @@
   "outputFile": "./src/api/tictactoeApi.ts",
   "exportName": "tictactoeApi",
   "flattenArg": true,
-  "hooks": true
+  "hooks": { "queries": true, "lazyQueries": true, "mutations": true }
 }

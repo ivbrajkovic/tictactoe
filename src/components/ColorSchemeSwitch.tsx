@@ -1,16 +1,14 @@
 import {
-  Group,
-  AppShell,
   Switch,
-  Title,
   useMantineColorScheme,
   useMantineTheme,
   useComputedColorScheme,
 } from '@mantine/core';
 
 import { IconSun, IconMoonStars } from '@tabler/icons-react';
+import { forwardRef } from 'react';
 
-export const Header = () => {
+export const ColorSchemeSwitch = forwardRef<HTMLInputElement>((props, ref) => {
   const theme = useMantineTheme();
 
   const computedColorScheme = useComputedColorScheme('dark', {
@@ -30,20 +28,15 @@ export const Header = () => {
   );
 
   return (
-    <AppShell.Header>
-      <Group h="100%" px="md" justify="space-between">
-        <Title order={2}>Tic Tac Toe</Title>
-        <Group>
-          <Switch
-            size="md"
-            color="dark.4"
-            checked={computedColorScheme === 'dark'}
-            onChange={toggleColorScheme}
-            onLabel={sunIcon}
-            offLabel={moonIcon}
-          />
-        </Group>
-      </Group>
-    </AppShell.Header>
+    <Switch
+      ref={ref}
+      size="md"
+      color="dark.4"
+      checked={computedColorScheme === 'dark'}
+      onChange={toggleColorScheme}
+      onLabel={sunIcon}
+      offLabel={moonIcon}
+      {...props}
+    />
   );
-};
+});

@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
 import { AppShell } from '@mantine/core';
-import { Header } from 'features/layout/Header';
-import { Navbar } from 'features/layout/Navbar';
+import { Header } from 'layout/Header';
+import { Navbar } from 'layout/Navbar';
 
 import classes from './Layout.module.css';
 
@@ -10,7 +10,7 @@ export const Layout = () => (
     padding="xl"
     header={{ height: 56 }}
     navbar={{
-      width: 300,
+      width: 62,
       breakpoint: 'sm',
     }}
     classNames={{

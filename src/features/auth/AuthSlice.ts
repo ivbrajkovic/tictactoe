@@ -1,19 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { tictactoeApi } from 'api/tictactoeApi';
+import { LoginOutput, tictactoeApi } from 'api/tictactoeApi';
 import { RootState } from 'store/store';
 
-type User = {
-  id: number;
-  username: string;
-};
-
 type AuthState = {
-  token: string | null;
-  user: User | null;
+  user: LoginOutput | null;
 };
 
 const initialState: AuthState = {
-  token: null,
   user: null,
 };
 
@@ -25,15 +18,13 @@ const authSlice = createSlice({
     builder
       .addMatcher(
         tictactoeApi.endpoints.loginCreate.matchFulfilled,
-        (state, { payload: { token, ...user } }) => {
-          state.token = token;
-          state.user = user;
+        (state, { payload }) => {
+          state.user = payload;
         },
       )
       .addMatcher(
         tictactoeApi.endpoints.logoutCreate.matchFulfilled,
         (state) => {
-          state.token = null;
           state.user = null;
         },
       );
@@ -42,5 +33,6 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const selectToken = (state: RootState) => state.auth.token;
 export const selectCurrentUser = (state: RootState) => state.auth.user;
+export const selectIsLoggedIn = (state: RootState) =>
+  Boolean(state.auth.user?.token);

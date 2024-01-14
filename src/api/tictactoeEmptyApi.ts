@@ -4,7 +4,7 @@ import { RootState } from 'store/store';
 const tictactoeBaseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_API_BASE_URL,
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.token;
+    const token = (getState() as RootState).auth.user?.token;
     token && headers.set('Authorization', `Bearer ${token}`);
     return headers;
   },

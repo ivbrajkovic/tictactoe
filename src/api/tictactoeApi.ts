@@ -295,14 +295,19 @@ export type PaginatedUserListRead = {
 };
 export const {
   useGamesListQuery,
+  useLazyGamesListQuery,
   useGamesCreateMutation,
   useGamesRetrieveQuery,
+  useLazyGamesRetrieveQuery,
   useGamesJoinCreateMutation,
   useGamesMoveCreateMutation,
   useLoginCreateMutation,
   useLogoutCreateMutation,
   useOpenapiRetrieveQuery,
+  useLazyOpenapiRetrieveQuery,
   useRegisterCreateMutation,
   useUsersListQuery,
+  useLazyUsersListQuery,
   useUsersRetrieveQuery,
+  useLazyUsersRetrieveQuery,
 } = injectedRtkApi;
