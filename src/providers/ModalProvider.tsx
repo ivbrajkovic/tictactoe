@@ -1,8 +1,4 @@
-import { Button, Text } from '@mantine/core';
-import {
-  ContextModalProps,
-  ModalsProvider as MantineModalsProvider,
-} from '@mantine/modals';
+import { ModalsProvider as MantineModalsProvider } from '@mantine/modals';
 import { modals } from 'modals';
 
 declare module '@mantine/modals' {
