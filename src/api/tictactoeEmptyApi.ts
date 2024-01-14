@@ -10,7 +10,14 @@ const tictactoeBaseQuery = fetchBaseQuery({
   },
 });
 
+export const tagType = {
+  gameList: 'gameList',
+  gamesRetrieve: 'gamesRetrieve',
+  gamesMoveCreate: 'gamesMoveCreate',
+} as const;
+
 export const tictactoeEmptyApi = createApi({
   baseQuery: tictactoeBaseQuery,
   endpoints: () => ({}),
+  tagTypes: Object.values(tagType),
 });

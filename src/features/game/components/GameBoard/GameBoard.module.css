@@ -1,6 +1,7 @@
 .board {
   aspect-ratio: 1 / 1;
   display: grid;
+  grid-template-rows: repeat(3, 1fr);
   grid-template-columns: repeat(3, 1fr);
 }
 
@@ -9,25 +10,25 @@
   align-items: center;
   justify-content: center;
 
+  color: var(--mantine-color-primary);
+
   border-top: 1px solid black;
   border-left: 1px solid black;
 
   transition: background-color 0.2s ease-in-out;
 
-  &:disabled {
-    cursor: not-allowed;
-  }
-
   &:hover {
-    background-color: var(--mantine-color-gray-1);
-  }
-
-  &:hover:enabled {
     background-color: lighten(var(--mantine-primary-color-filled), 0.85);
   }
 
-  &:active:enabled {
+  &:active {
     background-color: lighten(var(--mantine-primary-color-filled), 0.75);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--mantine-primary-color-6);
+    background: none;
   }
 
   &:nth-child(-n + 2) {

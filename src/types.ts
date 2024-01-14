@@ -6,5 +6,7 @@ export type ApiError = {
 
 export type ApiErrorResponse = {
   status: number;
-  data: { errors: ApiError[] };
+  data: {
+    errors: ApiError[];
+  };
 };

@@ -1,5 +1,6 @@
 import { IconX, IconCheck } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
+import { getErrorMessage } from 'utils/errors';
 
 export const errorNotification = ({
   title = 'Error',
@@ -13,6 +14,13 @@ export const errorNotification = ({
     icon: <IconX />,
   });
 };
+
+export const parsedErrorNotification =
+  (title = 'Error', message?: string) =>
+  (error: any) => {
+    const errorMessage = message ?? getErrorMessage(error);
+    errorNotification({ title, message: errorMessage });
+  };
 
 export const successNotification = ({
   title = 'Success',

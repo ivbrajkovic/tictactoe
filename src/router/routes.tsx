@@ -4,51 +4,30 @@ import { Login } from 'features/auth/Login';
 import { Register } from 'features/auth/Register';
 import { authorizationLoader, protectedLoader } from 'utils/loaders';
 import { GameList, Game } from 'features/game';
+import { NotFoundImage } from 'components/NotFoundImage';
 
 export const routes: RouteObject[] = [
   {
-    id: 'root',
-    path: '/',
+    // path: '/',
     Component: Layout,
     children: [
       {
         loader: protectedLoader,
         children: [
-          {
-            index: true,
-            loader: () => redirect('/games'),
-          },
-          {
-            path: 'games',
-            Component: GameList,
-          },
-          {
-            path: 'games/:gameId',
-            Component: Game,
-          },
-          {
-            path: 'new-game',
-            element: <div>New Game</div>,
-          },
+          { index: true, loader: () => redirect('games') },
+          { path: 'games', Component: GameList },
+          { path: 'games/:gameId', Component: Game },
         ],
       },
       {
         loader: authorizationLoader,
         children: [
-          {
-            path: '/login',
-            Component: Login,
-            action: () => {
-              console.log('login action');
-              return null;
-            },
-          },
-          {
-            path: '/register',
-            Component: Register,
-          },
+          { path: 'login', Component: Login },
+          { path: 'register', Component: Register },
         ],
       },
     ],
   },
+  { path: '404', Component: NotFoundImage },
+  { path: '*', loader: () => redirect('404') },
 ];

@@ -9,14 +9,16 @@ import {
   persistReducer,
   persistStore,
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import storageSession from 'redux-persist/lib/storage/session';
 
 import { tictactoeEmptyApi } from 'api/tictactoeEmptyApi';
+import 'api/tictactoeApiEnhanced';
+
 import authReducer from 'features/auth/AuthSlice';
 
 const persistActions = [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE];
 const authReducerPersisted = persistReducer(
-  { key: 'auth', storage },
+  { key: 'auth', storage: storageSession },
   authReducer,
 );
 

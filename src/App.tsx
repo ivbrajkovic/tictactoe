@@ -5,13 +5,16 @@ import { Notifications } from '@mantine/notifications';
 
 import { StoreProvider } from 'providers/StoreProvider';
 import { ThemeProvider } from 'providers/ThemeProvider';
+import { ModalsProvider } from 'providers/ModalProvider';
 import { Router } from 'router/Router';
 
 const App = () => (
   <StoreProvider>
     <ThemeProvider>
-      <Notifications />
-      <Router />
+      <ModalsProvider>
+        <Notifications />
+        <Router />
+      </ModalsProvider>
     </ThemeProvider>
   </StoreProvider>
 );

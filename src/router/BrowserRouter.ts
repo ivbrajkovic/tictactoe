@@ -13,6 +13,12 @@ class BrowserRouter {
   init = () => {
     this.router = createBrowserRouter(routes);
   };
+
+  navigate = (
+    ...args: Parameters<ReturnType<typeof createBrowserRouter>['navigate']>
+  ) => {
+    return this.router?.navigate(...args);
+  };
 }
 
 export const browserRouter = new BrowserRouter();
