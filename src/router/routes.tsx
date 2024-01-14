@@ -3,8 +3,7 @@ import { Layout } from 'layout/Layout';
 import { Login } from 'features/auth/Login';
 import { Register } from 'features/auth/Register';
 import { authorizationLoader, protectedLoader } from 'utils/loaders';
-import { GameList } from 'features/gameList/GameList';
-import { Game } from 'features/gameList/Game';
+import { GameList, Game } from 'features/game';
 
 export const routes: RouteObject[] = [
   {

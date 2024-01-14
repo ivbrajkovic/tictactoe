@@ -1,0 +1,45 @@
+.board {
+  aspect-ratio: 1 / 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+
+  transition: background-color 0.2s ease-in-out;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    background-color: var(--mantine-color-gray-1);
+  }
+
+  &:hover:enabled {
+    background-color: lighten(var(--mantine-primary-color-filled), 0.85);
+  }
+
+  &:active:enabled {
+    background-color: lighten(var(--mantine-primary-color-filled), 0.75);
+  }
+
+  &:nth-child(-n + 2) {
+    border-top: 1px solid black;
+  }
+
+  &:nth-child(-n + 3) {
+    border-top: none;
+  }
+
+  &:first-child,
+  &:nth-child(3n + 1) {
+    border-left: none;
+  }
+}

@@ -11,7 +11,7 @@ export const Layout = () => (
     header={{ height: 56 }}
     navbar={{
       width: 62,
-      breakpoint: 'sm',
+      breakpoint: 0,
     }}
     classNames={{
       header: classes.header,
