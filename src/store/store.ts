@@ -15,11 +15,16 @@ import { tictactoeEmptyApi } from 'api/tictactoeEmptyApi';
 import 'api/tictactoeApiEnhanced';
 
 import authReducer from 'features/auth/AuthSlice';
+import gameReducer from 'features/game/gameSlice';
 
 const persistActions = [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE];
 const authReducerPersisted = persistReducer(
   { key: 'auth', storage: storageSession },
   authReducer,
+);
+const gameReducerPersisted = persistReducer(
+  { key: 'game', storage: storageSession },
+  gameReducer,
 );
 
 export const store = configureStore({
@@ -27,6 +32,7 @@ export const store = configureStore({
   reducer: {
     [tictactoeEmptyApi.reducerPath]: tictactoeEmptyApi.reducer,
     auth: authReducerPersisted,
+    game: gameReducerPersisted,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

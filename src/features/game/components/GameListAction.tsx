@@ -19,7 +19,7 @@ export const GameListAction = (props: GameListActionProps) => {
       .catch(parsedErrorNotification('Unable to join game'));
 
   return (
-    <Group gap="sm">
+    <Group grow gap="sm">
       <Button component={NavLink} to={`${props.gameId}`}>
         View
       </Button>

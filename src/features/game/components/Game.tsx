@@ -11,10 +11,10 @@ import { GameBoard } from 'features/game/components/GameBoard/GameBoard';
 import { parsedErrorNotification } from 'shared/notification';
 import { GameInfo } from 'features/game/components/GameInfo';
 import { skipToken } from '@reduxjs/toolkit/query';
+import { useAppSelector } from 'hooks/store';
+import { selectGamePullInterval } from 'features/game/gameSlice';
 
 type GameReadState = { gameRead?: GameRead } | null;
-
-const POLLING_INTERVAL = 3_000; // refresh every 3 seconds, since we don't have websocket
 
 const useGameIdFromRouteParams = () => {
   const { gameId = '' } = useParams<{ gameId: string }>();
@@ -30,7 +30,9 @@ const useGameReadFromRouteState = () => {
 
 const useGameReadFromApi = (gameId: number | null) => {
   const gameRead = useGameReadFromRouteState();
-  const [pollingInterval, setPollingInterval] = useState(POLLING_INTERVAL);
+  const gamePullInterval = useAppSelector(selectGamePullInterval);
+
+  const [pollingInterval, setPollingInterval] = useState(gamePullInterval);
   const { data = gameRead, error } = useGamesRetrieveQuery(
     gameId ?? skipToken,
     { pollingInterval },

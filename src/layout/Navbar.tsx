@@ -12,11 +12,11 @@ import {
   NavLink as MantineNavLink,
   useMantineColorScheme,
 } from '@mantine/core';
-import { IconFile, IconList, IconLogout } from '@tabler/icons-react';
+import { IconFile, IconList, IconLogout, IconTool } from '@tabler/icons-react';
 
 import { useCurrentUser } from 'hooks/useCurrentUser';
 import { useLogout } from 'hooks/useLogout';
-import { openNewGameModal } from 'utils/modals';
+import { openGameSettingsModal, openNewGameModal } from 'utils/modals';
 import { useIsMobile } from 'hooks/useIsMobile';
 import { IconColorScheme } from 'components/IconColorScheme/IconColorScheme';
 
@@ -84,6 +84,11 @@ export const Navbar = (props: NavbarProps) => {
         <AppShell.Section>
           <Stack py="md" align="center">
             <MantineNavLink
+              label="Settings"
+              leftSection={<IconTool />}
+              onClick={openGameSettingsModal}
+            />
+            <MantineNavLink
               label="Color scheme"
               leftSection={<IconColorScheme />}
               onClick={toggleColorScheme}
@@ -141,23 +146,39 @@ export const Navbar = (props: NavbarProps) => {
       <Divider />
       <AppShell.Section>
         <Stack py="md" align="center">
-          <Tooltip label="Toggle color scheme">
+          <NavbarTooltip label="Settings">
+            <ActionIcon
+              size="xl"
+              radius="md"
+              variant="filled"
+              disabled={isLoggedOut}
+              onClick={openGameSettingsModal}
+            >
+              <IconTool />
+            </ActionIcon>
+          </NavbarTooltip>
+          <NavbarTooltip label="Toggle color scheme">
             <ActionIcon size="xl" radius="md" onClick={toggleColorScheme}>
               <IconColorScheme />
             </ActionIcon>
-          </Tooltip>
+          </NavbarTooltip>
+        </Stack>
+        <Divider />
+        <Stack py="md" align="center">
           {isLoggedIn ? (
-            <NavbarTooltip label="Logout">
-              <ActionIcon
-                loading={isLogoutLoading}
-                variant="filled"
-                size="xl"
-                radius="md"
-                onClick={logout}
-              >
-                <IconLogout />
-              </ActionIcon>
-            </NavbarTooltip>
+            <>
+              <NavbarTooltip label="Logout">
+                <ActionIcon
+                  loading={isLogoutLoading}
+                  variant="filled"
+                  size="xl"
+                  radius="md"
+                  onClick={logout}
+                >
+                  <IconLogout />
+                </ActionIcon>
+              </NavbarTooltip>
+            </>
           ) : null}
         </Stack>
       </AppShell.Section>

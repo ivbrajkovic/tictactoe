@@ -1,12 +1,13 @@
 import { Anchor, Container, Pagination, Paper, Table } from '@mantine/core';
 import { useGamesListQuery } from 'api/tictactoeApi';
 import { GameListAction } from 'features/game/components/GameListAction';
+import { selectGameListPullInterval } from 'features/game/gameSlice';
+import { useAppSelector } from 'hooks/store';
 import { useCurrentUser } from 'hooks/useCurrentUser';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const LIMIT = 5; // limit of games per page
-const POLLING_INTERVAL = 10_000; // refresh every 10 seconds, since we don't have websocket
 
 const useOffset = (limit: number) => {
   const [activePage, setPage] = useState(1);
@@ -16,10 +17,12 @@ const useOffset = (limit: number) => {
 
 export const GameList = () => {
   const user = useCurrentUser();
+  const gameListPullInterval = useAppSelector(selectGameListPullInterval);
+
   const { activePage, setPage, offset } = useOffset(LIMIT);
   const { data } = useGamesListQuery(
     { offset, limit: LIMIT },
-    { pollingInterval: POLLING_INTERVAL },
+    { pollingInterval: gameListPullInterval },
   );
 
   if (!data) return null;
@@ -28,7 +31,7 @@ export const GameList = () => {
   return (
     <Container>
       <Paper withBorder shadow="md" p="xl">
-        <Table.ScrollContainer minWidth={556}>
+        <Table.ScrollContainer minWidth={600}>
           <Table striped highlightOnHover withTableBorder verticalSpacing="xs">
             <Table.Thead>
               <Table.Tr>

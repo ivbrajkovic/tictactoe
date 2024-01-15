@@ -1,5 +1,11 @@
 import { ModalsProvider as MantineModalsProvider } from '@mantine/modals';
-import { modals } from 'modals';
+import { NewGameModal } from 'modals/NewGameModal';
+import { SettingsModal } from 'modals/SettingsModal';
+
+export const modals = {
+  newGame: NewGameModal,
+  settings: SettingsModal,
+};
 
 declare module '@mantine/modals' {
   export interface MantineModalsOverride {
