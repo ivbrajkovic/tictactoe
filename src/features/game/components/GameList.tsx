@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 const LIMIT = 5; // limit of games per page
+const POLLING_INTERVAL = 10_000; // refresh every 10 seconds, since we don't have websocket
 
 const useOffset = (limit: number) => {
   const [activePage, setPage] = useState(1);
@@ -16,7 +17,10 @@ const useOffset = (limit: number) => {
 export const GameList = () => {
   const user = useCurrentUser();
   const { activePage, setPage, offset } = useOffset(LIMIT);
-  const { data } = useGamesListQuery({ offset, limit: LIMIT });
+  const { data } = useGamesListQuery(
+    { offset, limit: LIMIT },
+    { pollingInterval: POLLING_INTERVAL },
+  );
 
   if (!data) return null;
   const count = Math.ceil((data.count || 0) / LIMIT);
