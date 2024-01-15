@@ -18,14 +18,20 @@ type IconProps = {
 
 const Icon = ({ id, firstPlayerId }: IconProps) => {
   if (id === null) return null;
-  if (id === firstPlayerId) return <IconX size={128} />;
-  if (id !== firstPlayerId) return <IconCircle size={128} />;
+  if (id === firstPlayerId) return <IconX width="100%" height="100%" />;
+  if (id !== firstPlayerId) return <IconCircle width="100%" height="100%" />;
   return null;
 };
 
 export const GameBoard = (props: GameBoardProps) => {
   return (
-    <Paper withBorder shadow="md" p="xl" maw={600} w="100%">
+    <Paper
+      withBorder
+      shadow="md"
+      maw={600}
+      w="100%"
+      p={{ base: 'md', sm: 'xl' }}
+    >
       <Box className={classes.board}>
         {props.board.map((row, rowIndex) =>
           row.map((cell, colIndex) => (

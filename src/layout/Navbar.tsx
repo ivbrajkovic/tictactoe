@@ -1,19 +1,105 @@
-import { AppShell, Avatar, Divider, Stack } from '@mantine/core';
+import { ReactNode } from 'react';
+import { NavLink as RouterNavLink } from 'react-router-dom';
+import juxt from 'lodash/fp/juxt';
+import {
+  ActionIcon,
+  AppShell,
+  Avatar,
+  Divider,
+  Stack,
+  Tooltip,
+  TooltipProps,
+  NavLink as MantineNavLink,
+  useMantineColorScheme,
+} from '@mantine/core';
 import { IconFile, IconList, IconLogout } from '@tabler/icons-react';
-import { ColorSchemeToggle } from 'components/ColorSchemeToggle';
-import { NavbarActionIcon } from 'components/NavbarActionIcon';
-import { NavbarTooltip } from 'components/NavbarTooltip';
+
 import { useCurrentUser } from 'hooks/useCurrentUser';
 import { useLogout } from 'hooks/useLogout';
-import { NavLink } from 'react-router-dom';
 import { openNewGameModal } from 'utils/modals';
+import { useIsMobile } from 'hooks/useIsMobile';
+import { IconColorScheme } from 'components/IconColorScheme/IconColorScheme';
 
-export const Navbar = () => {
+type NavbarTooltipProps = TooltipProps & {
+  children: ReactNode;
+};
+
+const NavbarTooltip = (props: NavbarTooltipProps) => (
+  <Tooltip
+    offset={10}
+    position="right"
+    openDelay={500}
+    closeDelay={100}
+    transitionProps={{ duration: 300 }}
+    {...props}
+  />
+);
+
+type NavbarProps = {
+  toggleNavbar: () => void;
+};
+
+export const Navbar = (props: NavbarProps) => {
   const user = useCurrentUser();
+  const isMobile = useIsMobile();
   const { logout, isLogoutLoading } = useLogout();
+  const { toggleColorScheme } = useMantineColorScheme();
 
   const isLoggedIn = Boolean(user);
   const isLoggedOut = !isLoggedIn;
+
+  if (isMobile) {
+    return (
+      <AppShell.Navbar>
+        <AppShell.Section>
+          <MantineNavLink
+            leftSection={
+              <Avatar tt="uppercase">{user?.username.slice(0, 2)}</Avatar>
+            }
+            label={user?.username}
+          />
+        </AppShell.Section>
+        <Divider />
+        <AppShell.Section grow>
+          <Stack py="md" align="center">
+            <MantineNavLink
+              label="New Game"
+              disabled={isLoggedOut}
+              leftSection={<IconFile />}
+              onClick={juxt([openNewGameModal, props.toggleNavbar])}
+            />
+            <MantineNavLink
+              label="Game List"
+              disabled={isLoggedOut}
+              leftSection={<IconList />}
+              // @ts-expect-error
+              component={RouterNavLink}
+              onClick={props.toggleNavbar}
+              to="/games"
+              {...(isLoggedOut && { component: 'button' })}
+            />
+          </Stack>
+        </AppShell.Section>
+        <Divider />
+        <AppShell.Section>
+          <Stack py="md" align="center">
+            <MantineNavLink
+              label="Color scheme"
+              leftSection={<IconColorScheme />}
+              onClick={toggleColorScheme}
+            />
+            {isLoggedIn ? (
+              <MantineNavLink
+                label="Logout"
+                leftSection={<IconLogout />}
+                onClick={logout}
+              />
+            ) : null}
+          </Stack>
+        </AppShell.Section>
+      </AppShell.Navbar>
+    );
+  }
 
   return (
     <AppShell.Navbar>
@@ -26,32 +112,51 @@ export const Navbar = () => {
       <AppShell.Section grow>
         <Stack py="md" align="center">
           <NavbarTooltip label="Game List">
-            <NavbarActionIcon disabled={isLoggedOut} onClick={openNewGameModal}>
+            <ActionIcon
+              size="xl"
+              radius="md"
+              variant="filled"
+              disabled={isLoggedOut}
+              onClick={openNewGameModal}
+            >
               <IconFile />
-            </NavbarActionIcon>
+            </ActionIcon>
           </NavbarTooltip>
           <NavbarTooltip label="Game List">
-            <NavbarActionIcon
+            <ActionIcon
               disabled={isLoggedOut}
-              component={NavLink}
+              variant="filled"
+              size="xl"
+              radius="md"
+              // @ts-expect-error
+              component={RouterNavLink}
               to="/games"
+              {...(isLoggedOut && { component: 'button' })}
             >
               <IconList />
-            </NavbarActionIcon>
+            </ActionIcon>
           </NavbarTooltip>
         </Stack>
       </AppShell.Section>
       <Divider />
       <AppShell.Section>
         <Stack py="md" align="center">
-          <NavbarTooltip label="Toggle color scheme">
-            <ColorSchemeToggle />
-          </NavbarTooltip>
+          <Tooltip label="Toggle color scheme">
+            <ActionIcon size="xl" radius="md" onClick={toggleColorScheme}>
+              <IconColorScheme />
+            </ActionIcon>
+          </Tooltip>
           {isLoggedIn ? (
             <NavbarTooltip label="Logout">
-              <NavbarActionIcon loading={isLogoutLoading} onClick={logout}>
+              <ActionIcon
+                loading={isLogoutLoading}
+                variant="filled"
+                size="xl"
+                radius="md"
+                onClick={logout}
+              >
                 <IconLogout />
-              </NavbarActionIcon>
+              </ActionIcon>
             </NavbarTooltip>
           ) : null}
         </Stack>
