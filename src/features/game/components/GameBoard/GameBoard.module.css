@@ -12,8 +12,8 @@
 
   color: var(--mantine-color-primary);
 
-  border-top: 1px solid black;
-  border-left: 1px solid black;
+  border-top: 3px solid var(--mantine-color-gray-6);
+  border-left: 3px solid var(--mantine-color-gray-6);
 
   transition: background-color 0.2s ease-in-out;
 
@@ -29,10 +29,6 @@
     cursor: not-allowed;
     color: var(--mantine-primary-color-6);
     background: none;
-  }
-
-  &:nth-child(-n + 2) {
-    border-top: 1px solid black;
   }
 
   &:nth-child(-n + 3) {

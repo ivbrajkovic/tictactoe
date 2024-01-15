@@ -14,7 +14,7 @@ import { skipToken } from '@reduxjs/toolkit/query';
 
 type GameReadState = { gameRead?: GameRead } | null;
 
-const POLLING_INTERVAL = 5_000; // refresh every 5 seconds, since we don't have websocket
+const POLLING_INTERVAL = 3_000; // refresh every 3 seconds, since we don't have websocket
 
 const useGameIdFromRouteParams = () => {
   const { gameId = '' } = useParams<{ gameId: string }>();
